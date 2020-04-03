@@ -1,13 +1,13 @@
 # RED SNAPPER
 ![Red Snapper](https://raw.githubusercontent.com/ZuraGuerra/theme-red-snapper/master/redsnapper.jpg)
 
-##><}}*> F E A T U R E S
+## ><}}*> F E A T U R E S
 + Directory path
 + Git branch name
 + Git status
 + YOUR OWN PET FISH!
 
-##><}}*> GIT STATUS
+## ><}}*> GIT STATUS
 ### Untracked changes
 Your pet will detect if you added files, but didn't track them. He will open his mouth, hungry of yummy commits!
 ![fish shell untracked changes](https://raw.githubusercontent.com/ZuraGuerra/theme-red-snapper/master/hungry2.png)
