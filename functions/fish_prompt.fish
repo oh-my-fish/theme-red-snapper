@@ -45,7 +45,7 @@ function fish_prompt
   printf "\n"
 
   # Draw fish
-  if [ (_git_branch_name)]
+  if [ (_git_branch_name) ]
     if [ (_is_git_dirty) ]
       printf "$orange_fish><$yellow_fish}}$black_fish*$red_fish< "
     else
