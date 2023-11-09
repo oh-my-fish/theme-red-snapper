@@ -42,13 +42,13 @@ function fish_prompt
     end
 
     if [ (_is_git_dirty) ]
-      printf " $orange_fish><$yellow_fish}}$black_fish*$red_fish< "
+      printf " $orange_fish><$yellow_fish}}$black_fish*$red_fish< \n"
     else
-      printf " $orange_fish><$yellow_fish}}$black_fish*$orange_fish> "
+      printf " $orange_fish><$yellow_fish}}$black_fish*$orange_fish> \n"
     end
 
   else
-    printf "$blue><}}*> "
+    printf "$blue><}}*> \n"
 
   end
 
