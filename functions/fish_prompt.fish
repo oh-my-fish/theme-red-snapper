@@ -41,6 +41,9 @@ function fish_prompt
       printf "$red("(_git_branch_name)")"
     end
 
+    # Add new line
+    printf "\n"
+
     if [ (_is_git_dirty) ]
       printf " $orange_fish><$yellow_fish}}$black_fish*$red_fish< "
     else
@@ -51,8 +54,5 @@ function fish_prompt
     printf "$blue><}}*> "
 
   end
-
-  # Add new line after prompt
-  echo
 
 end
