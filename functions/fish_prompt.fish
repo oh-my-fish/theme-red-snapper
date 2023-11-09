@@ -32,27 +32,26 @@ function fish_prompt
 
   printf "$blue ─> "
 
-
+  # Draw git branch
   if [ (_git_branch_name) ]
-
-    if test (_git_branch_name) = "main"
-      printf "$red(MAIN)"
+    if test (_git_branch_name) = "main" || test (_git_branch_name) = "master"
+      printf "$red("***(_git_branch_name)***")"
     else
       printf "$red("(_git_branch_name)")"
     end
-
-    # Add new line
-    printf "\n"
-
-    if [ (_is_git_dirty) ]
-      printf " $orange_fish><$yellow_fish}}$black_fish*$red_fish< "
-    else
-      printf " $orange_fish><$yellow_fish}}$black_fish*$orange_fish> "
-    end
-
-  else
-    printf "$blue><}}*> "
-
   end
 
+  # Add new line
+  printf "\n"
+
+  # Draw fish
+  if [ (_git_branch_name)]
+    if [ (_is_git_dirty) ]
+      printf "$orange_fish><$yellow_fish}}$black_fish*$red_fish< "
+    else
+      printf "$orange_fish><$yellow_fish}}$black_fish*$orange_fish> "
+    end
+  else
+    printf "$blue><}}*> "
+  end
 end
