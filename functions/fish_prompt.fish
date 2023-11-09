@@ -35,21 +35,24 @@ function fish_prompt
 
   if [ (_git_branch_name) ]
 
-    if test (_git_branch_name) = "master"
-      printf "$red(MASTER)"
+    if test (_git_branch_name) = "main"
+      printf "$red(MAIN)"
     else
       printf "$red("(_git_branch_name)")"
     end
 
     if [ (_is_git_dirty) ]
-      printf " $orange_fish><$yellow_fish}}$black_fish*$red_fish< \n"
+      printf " $orange_fish><$yellow_fish}}$black_fish*$red_fish< "
     else
-      printf " $orange_fish><$yellow_fish}}$black_fish*$orange_fish> \n"
+      printf " $orange_fish><$yellow_fish}}$black_fish*$orange_fish> "
     end
 
   else
-    printf "$blue><}}*> \n"
+    printf "$blue><}}*> "
 
   end
+
+  # Add new line after prompt
+  echo
 
 end
