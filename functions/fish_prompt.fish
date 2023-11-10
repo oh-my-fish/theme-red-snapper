@@ -52,6 +52,7 @@ function _maybe_draw_git_branch
         printf "$red{[%s]}" (string upper $branch_name)
       case '*'
         printf "$red{[%s]}" "$branch_name"
+    end
   end
 end
 
