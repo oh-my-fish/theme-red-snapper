@@ -16,15 +16,15 @@ function _fish_eye
 end
 
 function _init_colors
-  set -l blue (set_color -o blue)
-  set -l green (set_color -o green)
-  set -l red (set_color -o red)
-  set -l yellow (set_color -o yellow)
+  set -g blue (set_color -o blue)
+  set -g green (set_color -o green)
+  set -g red (set_color -o red)
+  set -g yellow (set_color -o yellow)
 
-  set -l orange_fish (set_color -o FFA500)
-  set -l yellow_fish (set_color -o FFB732)
-  set -l red_fish (set_color -o FF725A)
-  set -l black_fish (set_color -o 3F3F3F)
+  set -g orange_fish (set_color -o FFA500)
+  set -g yellow_fish (set_color -o FFB732)
+  set -g red_fish (set_color -o FF725A)
+  set -g black_fish (set_color -o 3F3F3F)
 
   set_color $fish_color_cwd
 end
@@ -66,9 +66,11 @@ function _draw_fish
   end
 
   # git dir = true
-  if test -n "$branch_name" -a -n (_is_git_dirty)
+  if test -n "$branch_name" ; and -n (_is_git_dirty)
     printf "$orange_fish><$yellow_fish}}$black_fish$fish_eye$red_fish< "
-  else
+  end
+  
+  if test -b "$branch_name" ; and not -n (_is_git_dirty)
     printf "$orange_fish><$yellow_fish}}$black_fish$fish_eye$orange_fish> "
   end
 end
