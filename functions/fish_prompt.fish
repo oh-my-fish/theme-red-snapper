@@ -6,6 +6,14 @@ function _is_git_dirty
   echo (command git status -s --ignore-submodules=dirty 2> /dev/null)
 end
 
+# Show fish as... sleeping on command error
+function _fish_eye
+  if test $status -ne 0
+    return "x"
+  else
+    return "*"
+  end
+end
 
 function fish_prompt
   set -l blue (set_color -o blue)
@@ -27,7 +35,7 @@ function fish_prompt
   if [ "$HOME" = (pwd) ]
     printf "$red~"
   else
-    printf (pwd)
+    printf (prompt_pwd)
   end
 
   printf "$blue ─> "
@@ -45,13 +53,16 @@ function fish_prompt
   printf "\n"
 
   # Draw fish
-  if [ (_git_branch_name) ]
-    if [ (_is_git_dirty) ]
-      printf "$orange_fish><$yellow_fish}}$black_fish*$red_fish< "
+  if not [ (_git_branch_name) ]
+      printf "$blue><}}$(_fish_eye)> "
     else
-      printf "$orange_fish><$yellow_fish}}$black_fish*$orange_fish> "
-    end
+      printf "$red><}}$(_fish_eye)> "
+  end
+
+  # Draw fish when git dir
+  if [ (_git_branch_name) ] and [ (_is_git_dirty) ]
+    printf "$orange_fish><$yellow_fish}}$black_fish$(_fish_eye)$red_fish< "
   else
-    printf "$blue><}}*> "
+    printf "$orange_fish><$yellow_fish}}$black_fish$(_fish_eye)$orange_fish> "
   end
 end
