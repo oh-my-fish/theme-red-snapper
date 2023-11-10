@@ -66,11 +66,11 @@ function _draw_fish
   end
 
   # git dir = true
-  if test -n "$branch_name" ; and -n (_is_git_dirty)
+  if test -n "$branch_name" ; and test -n (_is_git_dirty)
     printf "$orange_fish><$yellow_fish}}$black_fish$fish_eye$red_fish< "
   end
   
-  if test -b "$branch_name" ; and not -n (_is_git_dirty)
+  if test -b "$branch_name" ; and not test -n (_is_git_dirty)
     printf "$orange_fish><$yellow_fish}}$black_fish$fish_eye$orange_fish> "
   end
 end
