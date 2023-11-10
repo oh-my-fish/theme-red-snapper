@@ -9,13 +9,13 @@ end
 # Show fish as... sleeping on command error
 function _fish_eye
   if test $status -ne 0
-    return "x"
+    echo "x"
   else
-    return "*"
+    echo "*"
   end
 end
 
-function fish_prompt
+function _init_colors
   set -l blue (set_color -o blue)
   set -l green (set_color -o green)
   set -l red (set_color -o red)
@@ -27,42 +27,63 @@ function fish_prompt
   set -l black_fish (set_color -o 3F3F3F)
 
   set_color $fish_color_cwd
+end
 
-  if [ -n "$SSH_CONNECTION" ]
+function _maybe_draw_ssh_conn
+  if test -n "$SSH_CONNECTION"
     printf '%s | ' (hostname | head -c 10)
   end
+end
 
-  if [ "$HOME" = (pwd) ]
+function _draw_current_dir
+  if test "$HOME" = (pwd)
     printf "$red~"
   else
     printf (prompt_pwd)
   end
+end
+
+function _maybe_draw_git_branch
+  set -l branch_name (_git_branch_name)
+
+  if test -n "$branch_name"
+    switch "$branch_name"
+      case 'main' 'master'
+        printf "$red{[%s]}" (string upper $branch_name)
+      case '*'
+        printf "$red{[%s]}" "$branch_name"
+  end
+end
+
+function _draw_fish
+  set -l fish_eye (_fish_eye)
+  set -l branch_name (_git_branch_name)
+
+  # git dir = false
+  if not test -n "$branch_name"
+      printf "$blue><}}$fish_eye> "
+  end
+
+  # git dir = true
+  if test -n "$branch_name" -a -n (_is_git_dirty)
+    printf "$orange_fish><$yellow_fish}}$black_fish$fish_eye$red_fish< "
+  else
+    printf "$orange_fish><$yellow_fish}}$black_fish$fish_eye$orange_fish> "
+  end
+end
+
+function fish_prompt
+  _init_colors
+
+  _maybe_draw_ssh_conn
+
+  _draw_current_dir
 
   printf "$blue ─> "
 
-  # Draw git branch
-  if [ (_git_branch_name) ]
-    if test (_git_branch_name) = "main" || test (_git_branch_name) = "master"
-      printf "$red{$(string upper $(_git_branch_name))}"
-    else
-      printf "$red{"(_git_branch_name)"}"
-    end
-  end
+  _maybe_draw_git_branch
 
-  # Add new line
   printf "\n"
 
-  # Draw fish
-  if not [ (_git_branch_name) ]
-      printf "$blue><}}$(_fish_eye)> "
-    else
-      printf "$red><}}$(_fish_eye)> "
-  end
-
-  # Draw fish when git dir
-  if [ (_git_branch_name) ] and [ (_is_git_dirty) ]
-    printf "$orange_fish><$yellow_fish}}$black_fish$(_fish_eye)$red_fish< "
-  else
-    printf "$orange_fish><$yellow_fish}}$black_fish$(_fish_eye)$orange_fish> "
-  end
+  _draw_fish
 end
