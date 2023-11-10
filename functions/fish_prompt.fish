@@ -35,7 +35,7 @@ function fish_prompt
   # Draw git branch
   if [ (_git_branch_name) ]
     if test (_git_branch_name) = "main" || test (_git_branch_name) = "master"
-      printf "$red>{$(string upper $(_git_branch_name))}<"
+      printf "$red{$(string upper $(_git_branch_name))}"
     else
       printf "$red{"(_git_branch_name)"}"
     end
