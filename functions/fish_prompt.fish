@@ -6,15 +6,6 @@ function _is_git_dirty
   echo (command git status -s --ignore-submodules=dirty 2> /dev/null)
 end
 
-# Show fish as... sleeping on command error
-function _fish_eye
-  if test $status -ne 0
-    echo "x"
-  else
-    echo "*"
-  end
-end
-
 function _init_colors
   set -g blue (set_color -o blue)
   set -g green (set_color -o green)
@@ -57,21 +48,21 @@ function _maybe_draw_git_branch
 end
 
 function _draw_fish
-  set -l fish_eye (_fish_eye)
+
   set -l branch_name (_git_branch_name)
 
   # git dir = false
   if not test -n "$branch_name"
-      printf "$blue><}}$fish_eye> "
+    printf "$blue><}}*> "
   end
 
   # git dir = true
-  if test -n "$branch_name" -a test -n (_is_git_dirty)
-    printf "$orange_fish><$yellow_fish}}$black_fish$fish_eye$red_fish< "
-  end
-  
-  if test -b "$branch_name" -a not test -n (_is_git_dirty)
-    printf "$orange_fish><$yellow_fish}}$black_fish$fish_eye$orange_fish> "
+  if test -n "$branch_name"
+    if test -n (_is_git_dirty)
+      printf "$orange_fish><$yellow_fish}}$black_fish*$red_fish< "
+    else
+      printf "$orange_fish><$yellow_fish}}$black_fish*$orange_fish> "
+    end
   end
 end
 
