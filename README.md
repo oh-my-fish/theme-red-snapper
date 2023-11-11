@@ -1,21 +1,31 @@
 # RED SNAPPER
-![Red Snapper](https://raw.githubusercontent.com/ZuraGuerra/theme-red-snapper/master/redsnapper.jpg)
+![Red Snapper, fish shell theme](./images/red-snapper.jpg)
 
-## ><}}*> F E A T U R E S
+## Features
 + Directory path
 + Git branch name
 + Git status
-+ YOUR OWN PET FISH!
++ A LOYAL FISH PET!
 
-## ><}}*> GIT STATUS
-### Untracked changes
-Your pet will detect if you added files, but didn't track them. He will open his mouth, hungry of yummy commits!
-![fish shell untracked changes](https://raw.githubusercontent.com/ZuraGuerra/theme-red-snapper/master/hungry2.png)
+## Installation
+### Oh My Fish
+```fish
+omf theme red-snapper
+```
 
-After you commit, he will close his mouth, satiated.
-![fish shell commited](https://raw.githubusercontent.com/ZuraGuerra/theme-red-snapper/master/fed.png)
+### Fisher
+```fish
+fisher install oh-my-fish/theme-red-snapper
+```
+
+## Git Status
+### Track changes
+Your fish will identify if you've added files without tracking them. It will open its mouth, eager for new commits!
+![Red Snapper, preview dirty git repository](./images/preview-dirty-git.jpg)
+
+After you've committed, it will close its mouth, satisfied.
+![Red Snapper, preview clean git repository](./images/preview-clean-git.jpg)
 
 ### Can't find .git
-Something is fishy here! If you are not inside a Git working directory, your pet will go to sleep.
-![fish shell not using git](https://raw.githubusercontent.com/ZuraGuerra/theme-red-snapper/master/fishy.png)
-
+Something is fishy here! If you're not within a Git working directory, your pet will go to sleep.
+![Red Snapper, preview no git repository](./images/preview-no-git.jpg)

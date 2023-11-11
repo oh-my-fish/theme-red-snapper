@@ -6,50 +6,78 @@ function _is_git_dirty
   echo (command git status -s --ignore-submodules=dirty 2> /dev/null)
 end
 
+function _init_colors
+  set -g blue (set_color -o blue)
+  set -g green (set_color -o green)
+  set -g red (set_color -o red)
+  set -g yellow (set_color -o yellow)
 
-function fish_prompt
-  set -l blue (set_color -o blue)
-  set -l green (set_color -o green)
-  set -l red (set_color -o red)
-  set -l yellow (set_color -o yellow)
-
-  set -l orange_fish (set_color -o FFA500)
-  set -l yellow_fish (set_color -o FFB732)
-  set -l red_fish (set_color -o FF725A)
-  set -l black_fish (set_color -o 3F3F3F)
+  set -g orange_fish (set_color -o FFA500)
+  set -g yellow_fish (set_color -o FFB732)
+  set -g red_fish (set_color -o FF725A)
+  set -g black_fish (set_color -o 3F3F3F)
 
   set_color $fish_color_cwd
+end
 
-  if [ -n "$SSH_CONNECTION" ]
+function _maybe_draw_ssh_conn
+  if test -n "$SSH_CONNECTION"
     printf '%s | ' (hostname | head -c 10)
   end
+end
 
-  if [ "$HOME" = (pwd) ]
+function _draw_current_dir
+  if test "$HOME" = (pwd)
     printf "$red~"
   else
-    printf (pwd)
+    printf (prompt_pwd)
   end
+end
+
+function _maybe_draw_git_branch
+  set -l branch_name (_git_branch_name)
+
+  if test -n "$branch_name"
+    switch "$branch_name"
+      case 'main' 'master'
+        printf "$red{[%s]}" (string upper $branch_name)
+      case '*'
+        printf "$red{[%s]}" "$branch_name"
+    end
+  end
+end
+
+function _draw_fish
+
+  set -l branch_name (_git_branch_name)
+
+  # git dir = false
+  if not test -n "$branch_name"
+    printf "$blue><}}*> "
+  end
+
+  # git dir = true
+  if test -n "$branch_name"
+    if test -n (_is_git_dirty)
+      printf "$orange_fish><$yellow_fish}}$black_fish*$red_fish< "
+    else
+      printf "$orange_fish><$yellow_fish}}$black_fish*$orange_fish> "
+    end
+  end
+end
+
+function fish_prompt
+  _init_colors
+
+  _maybe_draw_ssh_conn
+
+  _draw_current_dir
 
   printf "$blue ─> "
 
+  _maybe_draw_git_branch
 
-  if [ (_git_branch_name) ]
+  printf "\n"
 
-    if test (_git_branch_name) = "master"
-      printf "$red(MASTER)"
-    else
-      printf "$red("(_git_branch_name)")"
-    end
-
-    if [ (_is_git_dirty) ]
-      printf " $orange_fish><$yellow_fish}}$black_fish*$red_fish< "
-    else
-      printf " $orange_fish><$yellow_fish}}$black_fish*$orange_fish> "
-    end
-
-  else
-    printf "$blue><}}*> "
-
-  end
-
+  _draw_fish
 end
