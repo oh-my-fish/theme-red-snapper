@@ -7,6 +7,17 @@
 + Git status
 + A LOYAL FISH PET!
 
+## Installation
+### Oh My Fish
+```fish
+omf theme red-snapper
+```
+
+### Fisher
+```fish
+fisher install oh-my-fish/theme-red-snapper
+```
+
 ## Git Status
 ### Track changes
 Your fish will identify if you've added files without tracking them. It will open its mouth, eager for new commits!
